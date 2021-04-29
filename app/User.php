@@ -16,7 +16,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'id',
+        'first_name',
+        'last_name',
+        'email', 
+        'password',
+        'landing_page'
     ];
 
     /**
@@ -36,4 +41,28 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * User belongs to one role
+     */
+    public function role()
+    {
+        return $this->belongdTo('App\Role');
+    }
+
+    /**
+     * User has many projects
+     */
+    public function projects()
+    {
+        return $this->hasMany('App\Project');
+    }
+
+    /**
+     * User is member in many projects
+     */
+    public function projects_member(Type $var = null)
+    {
+        return $this->belongsToMany('App\Project');
+    }
 }
