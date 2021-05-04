@@ -28,4 +28,20 @@ class Category extends Model
     {
         return $this->hasMany('App\Article');
     }
+
+    /**
+     * Category belongs to one parent category
+     */
+    public function parent()
+    {
+        return $this->belongsTo('App\Category','parent_id');
+    }
+
+    /**
+     * Category has many category children
+     */
+    public function children()
+    {
+        return $this->hasMany('App\Category','parent_id');
+    }
 }

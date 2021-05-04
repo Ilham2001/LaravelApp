@@ -14,7 +14,9 @@ class Project extends Model
         'website',
         'isPublic',
         'landing_page',
-        'isClosed'
+        'isClosed',
+        'user_id',
+        'parent_id'
     ];
 
     /**
@@ -47,5 +49,21 @@ class Project extends Model
     public function members()
     {
         return $this->belongsToMany('App\User');
+    }
+
+    /**
+     * Project belongs to one parent project
+     */
+    public function parent()
+    {
+        return $this->belongsTo('App\Project','parent_id');
+    }
+
+    /**
+     * Project has many project children
+     */
+    public function children()
+    {
+        return $this->hasMany('App\Project','parent_id');
     }
 }
