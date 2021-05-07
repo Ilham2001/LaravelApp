@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\Category;
+use App\Article;
+use App\Wiki;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ProjectController extends Controller
 {
@@ -15,18 +18,6 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        /*$project = new Project;
-
-        //$parent = Project::find(8);
-
-        $project->name = ":)";
-        $project->description = "descriptionnnnn";
-        $project->parent_id =2;
-
-        $project->save();
-        dd($project);*/
-
-
         $projects = Project::all();
         return $projects->toJson(JSON_PRETTY_PRINT);
     }
@@ -52,9 +43,22 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
-    {
+    public function show($id) {
+
+        $project = Project::find($id);
+        
+        $categories = $project->categories;
+
+        $articles = array();
+
+        foreach($categories as $category) {
+            array_push($articles, $category->articles);
+        }
+        
+        $wikis = $project->wikis;
+
         return $project->toJson(JSON_PRETTY_PRINT);
+        //return response()->json(['project'=>$project,'categories'=>$categories, 'articles'=>$articles]);
     }
 
     /**

@@ -21,4 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResource('category','CategoryController');
 
 Route::apiResource('project','ProjectController');
-    
+
+Route::apiResource('article','ArticleController');

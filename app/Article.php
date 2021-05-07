@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    public $table = "wikis";
+    public $table = "articles";
     protected $fillable = [
         'id',
         'title',
@@ -17,7 +17,8 @@ class Article extends Model
         'ticket_number',
         'cause',
         'resolution',
-        'keywords'
+        'keywords',
+        'category_id'
     ];
 
     /**

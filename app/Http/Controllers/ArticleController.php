@@ -25,7 +25,11 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Article::create($request->all())) {
+            return response()->json([
+                'success' => 'Article crée'
+            ],200);
+        }
     }
 
     /**
@@ -36,7 +40,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        
     }
 
     /**

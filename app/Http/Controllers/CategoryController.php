@@ -40,8 +40,13 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
+
+        $category = Category::find($id);
+        $articles = $category->articles;
+        $children = $category->children;
+        //dd($children[0]->articles);
         return $category;
     }
 

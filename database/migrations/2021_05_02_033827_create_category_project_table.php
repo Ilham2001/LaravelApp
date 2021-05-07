@@ -30,6 +30,6 @@ class CreateCategoryProjectTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('project_category');
+        Schema::dropIfExists('category_project');
     }
 }
