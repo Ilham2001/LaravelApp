@@ -14,7 +14,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        $articles = Article::all();
+        return $articles->toJson(JSON_PRETTY_PRINT);
     }
 
     /**
@@ -38,9 +39,11 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show($id)
     {
-        
+        $article = Article::find($id);
+        //dd($children[0]->articles);
+        return $article;
     }
 
     /**
@@ -52,7 +55,11 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        if($article->update($request->all())) {
+            return response()->json([
+                'success' => 'Modification effectuée'
+            ],200);
+        }
     }
 
     /**

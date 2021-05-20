@@ -46,6 +46,8 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $articles = $category->articles;
         $children = $category->children;
+        $articles_length = count($children);
+        //dd($articles_length);
         //dd($children[0]->articles);
         return $category;
     }
@@ -79,5 +81,12 @@ class CategoryController extends Controller
                 'success' => 'Suppression effectuée'
             ],200);
         }
+    }
+
+    public function articles_length($id)
+    {
+        $category = Category::find($id);
+        $articles_length = count($category->articles);
+        return $articles_length;
     }
 }

@@ -10,7 +10,8 @@ class Wiki extends Model
     protected $fillable = [
         'id',
         'title',
-        'content'
+        'content',
+        'project_id'
     ];
 
     /**

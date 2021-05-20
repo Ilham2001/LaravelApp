@@ -18,6 +18,7 @@ class Article extends Model
         'cause',
         'resolution',
         'keywords',
+        'workaround',
         'category_id'
     ];
 

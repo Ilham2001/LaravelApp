@@ -25,7 +25,11 @@ class WikiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Wiki::create($request->all())) {
+            return response()->json([
+                'success' => 'Wiki créée'
+            ],200);
+        }
     }
 
     /**
@@ -34,7 +38,7 @@ class WikiController extends Controller
      * @param  \App\Wiki  $wiki
      * @return \Illuminate\Http\Response
      */
-    public function show(Wiki $wiki)
+    public function show($id)
     {
         //
     }

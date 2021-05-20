@@ -16,11 +16,11 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
-            $table->string('website');
-            $table->boolean('isPublic');
-            $table->string('landing_page');
-            $table->boolean('isClosed');
+            $table->text('description')->nullable();
+            $table->string('website')->nullable();
+            $table->boolean('isPublic')->nullable();
+            $table->string('landing_page')->nullable();
+            $table->boolean('isClosed')->nullable();
             $table->timestamps();
         });
     }
