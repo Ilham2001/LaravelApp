@@ -47,4 +47,6 @@ Route::apiResource('role','RoleController');
 
 Route::apiResource('user', 'UserController');
 
+Route::apiResource('document', 'DocumentController');
+
 

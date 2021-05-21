@@ -107,6 +107,7 @@ class ProjectController extends Controller
         $projectDTO->isPublic = $project->isPublic;
         $projectDTO->landing_page = $project->landing_page;
         $projectDTO->isClosed = $project->isClosed;
+        $projectDTO->parent_id = $project->parent_id;
         
         $membersDTO = [];
 

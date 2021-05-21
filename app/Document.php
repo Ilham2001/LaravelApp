@@ -10,8 +10,9 @@ class Document extends Model
     protected $fillable = [
         'id',
         'title',
-        'description',
-        'reference'
+        'reference',
+        'wiki_id',
+        'article_id'
     ];
 
     /**

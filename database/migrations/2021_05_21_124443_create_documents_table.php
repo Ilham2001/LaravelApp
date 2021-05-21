@@ -16,8 +16,11 @@ class CreateDocumentsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
             $table->string('reference');
+            $table->unsignedBigInteger('wiki_id')->nullable();
+            $table->foreign('wiki_id')->references('id')->on('wikis')->onDelete('cascade');
+            $table->unsignedBigInteger('article_id')->nullable();
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
             $table->timestamps();
         });
     }

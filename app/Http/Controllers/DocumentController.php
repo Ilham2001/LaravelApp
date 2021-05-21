@@ -25,7 +25,32 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $document = new Document;
+        if($request->hasFile('reference')) {
+            /* Original file name with extension */
+            $originalFileName = $request->file('reference')->getClientOriginalName();
+            
+            /* File name without extension */
+            $fileName = pathinfo($originalFileName, PATHINFO_FILENAME);
+            
+            /* Extension */
+            $extension = $request->file('reference')->getClientOriginalExtension();
+
+            /* Complete file name = original name + without spaces + rand numbers + extension */
+            $completeFile = str_replace(' ','_',$fileName).'-'.rand().'_'.time().'.'.$extension; 
+            
+            $path = $request->file('reference')->storeAs('public/documents',$completeFile);
+            //dd($path);
+
+            $document->title = $fileName;
+            $document->reference = $completeFile;
+        }
+
+        if($document->save()) {
+            return response()->json([
+                'success' => 'File uploaded successfully'
+            ],200);
+        }
     }
 
     /**
