@@ -2,11 +2,12 @@
 
 namespace App\Http\DTO;
 
-class PermissionDTO
+class RoleDTO
 {
     protected $attributes = [
         'id',
         'name',
-        'permission_code'
+        'permissions',
+        'users'
     ];
 }

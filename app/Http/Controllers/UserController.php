@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Role;
 use App\Http\DTO\UserDTO;
+use App\Http\DTO\PermissionDTO;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -158,5 +159,23 @@ class UserController extends Controller
         $response['code'] = 200;
         $response['message'] = 'Authentification réussie';
         return response()->json($response);
+    }
+
+    public function getUserPermissions($id)
+    {
+        $user = User::find($id);
+        $userPermissions = [];
+
+        foreach($user->role->permissions as $permission) {
+            $permissionDTO = new PermissionDTO;
+            $permissionDTO->id = $permission->id;
+            $permissionDTO->name = $permission->name;
+            $permissionDTO->permission_code = $permission->permission_code;
+            array_push($userPermissions, $permissionDTO);
+        }
+
+        //dd($userPermissions);
+
+        return json_encode($userPermissions);
     }
 }

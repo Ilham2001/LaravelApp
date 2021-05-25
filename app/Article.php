@@ -19,7 +19,8 @@ class Article extends Model
         'resolution',
         'keywords',
         'workaround',
-        'category_id'
+        'category_id',
+        'user_id'
     ];
 
     /**
@@ -36,5 +37,13 @@ class Article extends Model
     public function documents()
     {
         return $this->hasMany('App\Document');
+    }
+
+    /**
+     * Article belongs to one user
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 }

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\role;
+use App\Role;
+use App\Http\DTO\RoleDTO;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -16,7 +17,28 @@ class RoleController extends Controller
     {
         $roles = Role::all();
 
-        return $roles->toJson(JSON_PRETTY_PRINT);
+        $rolesDTO = [];
+
+        foreach($roles as $role) {
+           
+            $roleDTO = new RoleDTO;
+
+            $roleDTO->id = $role->id;
+            $roleDTO->name = $role->name;
+            
+            $permissions = [];
+            foreach($role->permissions as $permission) {
+                array_push($permissions, $permission->name);
+            }
+
+            $roleDTO->permissions = $permissions;
+
+            array_push($rolesDTO, $roleDTO);
+        }
+
+        //dd($rolesDTO);
+
+        return json_encode($rolesDTO);
     }
 
     /**
@@ -51,7 +73,18 @@ class RoleController extends Controller
     public function show($id)
     {
         $role = Role::find($id);
-        return $role->toJson(JSON_PRETTY_PRINT);
+        $roleDTO = new RoleDTO;
+
+        $roleDTO->id = $role->id;
+        $roleDTO->name = $role->name;
+        $permissions = [];
+        foreach($role->permissions as $permission) {
+            array_push($permissions, $permission->name);
+        }    
+
+        $roleDTO->permissions = $permissions;
+        //dd($roleDTO);
+        return json_encode($roleDTO);
     }
 
     /**

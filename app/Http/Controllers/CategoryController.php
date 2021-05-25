@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\User;
+use App\Http\DTO\ArticleDTO;
+use App\Http\DTO\CategoryDTO;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -42,14 +45,43 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-
         $category = Category::find($id);
-        $articles = $category->articles;
-        $children = $category->children;
-        $articles_length = count($children);
-        //dd($articles_length);
-        //dd($children[0]->articles);
-        return $category;
+        $categoryDTO = new CategoryDTO;
+        
+        $articlesDTO = [];
+        
+        foreach ($category->articles as $article) {
+            $articleDTO = new ArticleDTO;
+            $articleDTO->id = $article->id;
+            $articleDTO->title = $article->title;
+            $articleDTO->summary = $article->summary;
+            $articleDTO->environment = $article->environment;
+            $articleDTO->description = $article->description;
+            $articleDTO->error_message = $article->error_message;
+            $articleDTO->ticket_number = $article->ticket_number;
+            $articleDTO->cause = $article->cause;
+            $articleDTO->resolution = $article->resolution;
+            $articleDTO->keywords = $article->keywords;
+            $articleDTO->workaround = $article->workaround;
+            $articleDTO->category_id = $article->category_id;
+            $author = User::find($article->user_id);
+            $articleDTO->author = $author->first_name . " " . $author->last_name;
+            $articleDTO->created_at = $article->created_at;
+            $articleDTO->updated_at = $article->updated_at;
+            array_push($articlesDTO, $articleDTO);
+        }
+
+        $categoryDTO->id = $category->id;
+        $categoryDTO->title = $category->title;
+        $categoryDTO->description = $category->description;
+        $categoryDTO->description = $category->description;
+        $categoryDTO->projects = $category->projects;
+        $categoryDTO->articles = $articlesDTO;
+        $categoryDTO->parent_id = $category->parent_id;
+        $categoryDTO->children = $category->children;
+        $categoryDTO->articles_length = count($category->children);
+
+        return json_encode($categoryDTO);
     }
 
     /**

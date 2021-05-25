@@ -34,6 +34,14 @@ Route::apiResource('project','ProjectController');
 Route::get('project/addMember/{project}/{member}', 'ProjectController@addMember');
 Route::resource('project', 'ProjectController');
 
+//Get user permissions
+Route::get('user/getPermissions/{user}', 'UserController@getUserPermissions');
+Route::resource('user', 'UserController');
+
+//Search
+Route::get('project/search/{data}', 'ProjectController@search');
+Route::resource('project', 'ProjectController');
+
 
 
 
