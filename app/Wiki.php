@@ -11,7 +11,8 @@ class Wiki extends Model
         'id',
         'title',
         'content',
-        'project_id'
+        'project_id',
+        'user_id'
     ];
 
     /**
@@ -28,5 +29,21 @@ class Wiki extends Model
     public function documents()
     {
         return $this->hasMany('App\Document');
+    }
+
+     /**
+     * Wiki belongs to one user
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    /**
+     * Wiki has many actions
+     */
+    public function actions()
+    {
+        return $this->hasMany('App\Action');
     }
 }

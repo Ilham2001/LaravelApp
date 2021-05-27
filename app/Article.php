@@ -46,4 +46,12 @@ class Article extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    /**
+     * Article has many actions
+     */
+    public function actions()
+    {
+        return $this->hasMany('App\Action');
+    }
 }

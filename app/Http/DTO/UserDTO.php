@@ -11,6 +11,9 @@ class UserDTO
         'email',
         'landing_page',
         'role',
-        'role_id'
+        'role_id',
+        'projects_length',
+        'articles_length',
+        'wikis_length'
     ];
 }

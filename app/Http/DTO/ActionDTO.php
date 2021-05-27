@@ -2,14 +2,15 @@
 
 namespace App\Http\DTO;
 
-class WikiDTO
+class ActionDTO
 {
     protected $attributes = [
         'id',
-        'title',
-        'content',
-        'project_id',
-        'wiki_id',
+        'type',
+        'user',
+        'project',
+        'article',
+        'wiki',
         'created_at',
         'updated_at'
     ];

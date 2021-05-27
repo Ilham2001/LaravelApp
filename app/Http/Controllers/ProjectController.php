@@ -6,6 +6,8 @@ use App\Project;
 use App\Category;
 use App\Article;
 use App\Wiki;
+use App\Action;
+use App\TypeAction;
 use App\User;
 use App\Http\DTO\UserDTO;
 use App\Http\DTO\WikiDTO;
@@ -74,6 +76,16 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         if($project=Project::create($request->all())) {
+
+            /* Create action */
+            $action = new Action;
+            $user = User::find($request->user_id);
+            $type_action = TypeAction::find(1);
+            $action->user()->associate($user);
+            $action->type_action()->associate($type_action);
+            $action->project()->associate($project);
+            $action->save();
+
             return response()->json([
                 'success' => 'Projet créée'
             ],201);

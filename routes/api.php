@@ -55,4 +55,6 @@ Route::apiResource('user', 'UserController');
 
 Route::apiResource('document', 'DocumentController');
 
+Route::apiResource('action', 'ActionController');
+
 

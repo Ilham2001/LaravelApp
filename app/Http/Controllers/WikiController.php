@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Wiki;
+use App\User;
+use App\Action;
 use App\Document;
+use App\TypeAction;
 use App\Http\DTO\WikiDTO;
 use Illuminate\Http\Request;
 
@@ -31,7 +34,8 @@ class WikiController extends Controller
         if($wiki = Wiki::create([
             'title' => $request->title,
             'content' => $request->content,
-            'project_id' => $request->project_id
+            'project_id' => $request->project_id,
+            'user_id' => $request->user_id
         ]))
         
 
@@ -60,6 +64,16 @@ class WikiController extends Controller
 
             $document->save();
         }
+
+        /* Create action */
+        $action = new Action;
+        $user = User::find($request->user_id);
+        $type_action = TypeAction::find(4);
+        $action->user()->associate($user);
+        $action->type_action()->associate($type_action);
+        $action->wiki()->associate($wiki);
+        $action->save();
+        
         
         return response()->json([
             'success' => 'Wiki créée'
@@ -81,6 +95,8 @@ class WikiController extends Controller
         $wikiDTO->title = $wiki->title;
         $wikiDTO->content = $wiki->content;
         $wikiDTO->project_id = $wiki->project_id;
+        $wikiDTO->user_id = $wiki->user_id;
+        
 
         return json_encode($wikiDTO);
     }
@@ -95,7 +111,22 @@ class WikiController extends Controller
     public function update(Request $request, $id)
     {
         $wiki = Wiki::find($id);
-        if($wiki->update($request->all())) {
+        if($wiki->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'project_id' => $request->project_id,
+            'user_id' => $request->user_id
+        ])) 
+        {
+            /* Create action */
+            $action = new Action;
+            $user = User::find($request->user_id);
+            $type_action = TypeAction::find(5);
+            $action->user()->associate($user);
+            $action->type_action()->associate($type_action);
+            $action->wiki()->associate($wiki);
+            $action->save();
+            
             return response()->json([
                 'success' => 'Modification effectuée'
             ],200);

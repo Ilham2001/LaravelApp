@@ -6,6 +6,8 @@ use App\Article;
 use App\Document;
 use App\User;
 use App\Category;
+use App\Action;
+use App\TypeAction;
 use File;
 use App\Http\DTO\ArticleDTO;
 use Illuminate\Http\Request;
@@ -32,7 +34,6 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $article = new Article;
         if($article = Article::create([
             'title' => $request->title,
             'summary' => $request->summary,
@@ -74,6 +75,15 @@ class ArticleController extends Controller
             $document->article()->associate($article);
             $document->save();
         }
+         
+        /* Create action */
+        $action = new Action;
+        $user = User::find($request->user_id);
+        $type_action = TypeAction::find(2);
+        $action->user()->associate($user);
+        $action->type_action()->associate($type_action);
+        $action->article()->associate($article);
+        $action->save();
 
         return response()->json([
             'success' => 'Article créée'
@@ -127,6 +137,15 @@ class ArticleController extends Controller
     {
         $article = Article::find($id);
         if($article->update($request->all())) {
+            /* Create action */
+            $action = new Action;
+            $user = User::find($request->user_id);
+            $type_action = TypeAction::find(3);
+            $action->user()->associate($user);
+            $action->type_action()->associate($type_action);
+            $action->article()->associate($article);
+            $action->save();
+
             return response()->json([
                 'success' => 'Modification effectuée'
             ],200);

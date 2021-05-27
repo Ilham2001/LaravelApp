@@ -43,6 +43,9 @@ class UserController extends Controller
             $userDTO->landing_page = $user->landing_page;
             $role_name = $user->role->name;
             $userDTO->role = $user->role->name;
+            $userDTO->projects_length = count($user->projects);
+            $userDTO->articles_length = count($user->articles);
+            $userDTO->wikis_length = count($user->wikis);
             array_push($usersDTO, $userDTO);
         }
         //json_encode($usersDTO);

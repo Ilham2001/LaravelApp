@@ -66,4 +66,12 @@ class Project extends Model
     {
         return $this->hasMany('App\Project','parent_id');
     }
+
+    /**
+     * Project has many actions
+     */
+    public function actions()
+    {
+        return $this->hasMany('App\Action');
+    }
 }
