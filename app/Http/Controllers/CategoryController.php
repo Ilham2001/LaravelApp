@@ -29,11 +29,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if(Category::create($request->all())) {
-            return response()->json([
-                'success' => 'Catégorie créée'
+        if($category = Category::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'parent_id' => $request->parent_id
+            ])) 
+
+        $category->projects()->attach($request->project_id); 
+                
+        return response()->json([
+            'success' => 'Catégorie créée'
             ],200);
-        }
 
     }
 

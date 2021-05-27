@@ -45,9 +45,11 @@ class ArticleController extends Controller
             'workaround' => $request->workaround,
             'environment' => $request->environment,
             'category_id' => $request->category_id,
-            'user_id' => $request->user_id
+            'user_id' => $request->user_id,
         ]))
 
+        $category = Category::find($request->category_id);
+        $category->projects()->attach($request->project_id);
         /* Create the document */
         $document = new Document;
         if($request->hasFile('reference')) {

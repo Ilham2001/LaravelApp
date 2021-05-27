@@ -43,8 +43,6 @@ Route::get('project/search/{data}', 'ProjectController@search');
 Route::resource('project', 'ProjectController');
 
 
-
-
 Route::apiResource('article','ArticleController');
 
 Route::apiResource('wiki','WikiController');

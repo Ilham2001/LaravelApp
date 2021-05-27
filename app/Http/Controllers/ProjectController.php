@@ -209,6 +209,8 @@ class ProjectController extends Controller
             $projectDTO->isPublic = $project->isPublic;
             $projectDTO->landing_page = $project->landing_page;
             $projectDTO->isClosed = $project->isClosed;
+            $projectDTO->created_at = $project->created_at;
+            $projectDTO->updated_at = $project->updated_at;
     
             $membersDTO = [];
     
@@ -280,13 +282,24 @@ class ProjectController extends Controller
             $wikiDTO->title = $wiki->title;
             $wikiDTO->content = $wiki->content;
             $wikiDTO->project_id = $wiki->project_id;
+            $wikiDTO->created_at = $wiki->created_at;
+            $wikiDTO->updated_at = $wiki->updated_at;
             array_push($wikisDTO, $wikiDTO);
 
         }
         
+        $length = count($articlesDTO) + count($projectsDTO) + count($wikisDTO);
+        $projects_length = count($projectsDTO);
+        $articles_length = count($articlesDTO);
+        $wikis_length = count($wikisDTO);
+
         $searchResult->projects = $projectsDTO;
         $searchResult->articles = $articlesDTO;
         $searchResult->wikis = $wikisDTO;
+        $searchResult->result_length = $length;
+        $searchResult->projects_length = $projects_length;
+        $searchResult->articles_length = $articles_length;
+        $searchResult->wikis_length = $wikis_length;
 
         return json_encode($searchResult);
     }

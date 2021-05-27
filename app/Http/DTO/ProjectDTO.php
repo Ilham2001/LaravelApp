@@ -17,6 +17,8 @@ class ProjectDTO
         'members',
         'wikis',
         'categories',
-        'articles'
+        'articles',
+        'created_at',
+        'updated_at'
     ];
 }

@@ -108,7 +108,15 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::find($id);
-        if($user->update($request->all())) {
+        if($user->update([
+
+            'first_name' => $request->first_name,
+            'last_name'  => $request->last_name,
+            'email'      => $request->email,
+            'password'   => Hash::make($request->password),
+            'landing_page' => $request->landing_page,
+            'role_id' => $request->role_id
+        ])) {
             return response()->json([
                 'success' => 'Modification effectuée'
             ],200);
