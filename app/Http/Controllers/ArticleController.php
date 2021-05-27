@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Document;
 use App\User;
+use App\Category;
 use File;
 use App\Http\DTO\ArticleDTO;
 use Illuminate\Http\Request;
