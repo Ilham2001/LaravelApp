@@ -56,6 +56,7 @@ class ProjectController extends Controller
                 $memberDTO->role = $member->role->name;
                 array_push($membersDTO,$memberDTO);
             }
+
             $projectDTO->members = $membersDTO;
 
             array_push($projectsDTO, $projectDTO);
@@ -141,6 +142,7 @@ class ProjectController extends Controller
         $projectDTO->wikis = $project->wikis;
         $projectDTO->categories = $project->categories;
         $projectDTO->articles = $articles;
+        $projectDTO->articles_length = count($articles);
 
         //dd($projectDTO);
         return json_encode($projectDTO);
@@ -172,6 +174,11 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        foreach ($project->actions as $action) {
+            $action->project()->dissociate($project);
+            $action->save();
+        }
+
         if($project->delete()) {
             return response()->json([
                 'success' => 'Suppression effectuée'

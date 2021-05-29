@@ -87,6 +87,14 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * User has many actions
+     */
+    public function actions()
+    {
+        return $this->hasMany('App\Action');
+    }
+
+    /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed

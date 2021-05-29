@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Role;
+use App\Project;
 use App\Http\DTO\UserDTO;
 use App\Http\DTO\PermissionDTO;
 
@@ -23,7 +24,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        //dd("here");
         
         $users = User::all();
         $roles = Role::all();
@@ -118,7 +118,7 @@ class UserController extends Controller
             'email'      => $request->email,
             'password'   => Hash::make($request->password),
             'landing_page' => $request->landing_page,
-            'role_id' => $request->role_id
+            'role_id' => $request->role_id,
         ])) {
             return response()->json([
                 'success' => 'Modification effectuée'
@@ -135,11 +135,32 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
+        
+        foreach ($user->actions as $action) {
+            if ($action->delete()) {
+                echo "ok";
+            }
+        }
+       
+        foreach ($user->projects as $project) {
+            $project->user()->dissociate($user);
+
+            $project->save();
+        }
+        
+        foreach ($user->articles as $article) {
+            $article->user()->dissociate($user);
+
+            $article->save();
+        }
+        
+
         if($user->delete()) {
             return response()->json([
                 'success' => 'Utilisateur supprimé'
             ],200);
         }
+        
     }
 
     public function login(Request $request) {
@@ -185,8 +206,13 @@ class UserController extends Controller
             array_push($userPermissions, $permissionDTO);
         }
 
-        //dd($userPermissions);
-
         return json_encode($userPermissions);
+    }
+
+    public function numberOfArticles($id)
+    {
+        $user = User::find($id);
+        $number_of_articles = count($user->articles);
+        return $number_of_articles;
     }
 }

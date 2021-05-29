@@ -42,6 +42,10 @@ Route::resource('user', 'UserController');
 Route::get('project/search/{data}', 'ProjectController@search');
 Route::resource('project', 'ProjectController');
 
+//User's number of articles
+Route::get('user/numberOfArticles/{user}', 'UserController@numberOfArticles');
+Route::resource('user', 'UserController');
+
 
 Route::apiResource('article','ArticleController');
 

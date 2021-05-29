@@ -18,6 +18,7 @@ class ProjectDTO
         'wikis',
         'categories',
         'articles',
+        'articles_length',
         'created_at',
         'updated_at'
     ];

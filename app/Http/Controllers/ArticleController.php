@@ -161,6 +161,13 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         $article = Article::find($id);
+
+        foreach ($article->actions as $action) {
+            $action->article()->dissociate($article);
+            $action->save();
+        }
+
+
         if($article->delete()) {
             $article->documents()->delete();
             return response()->json([

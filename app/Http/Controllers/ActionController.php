@@ -15,7 +15,8 @@ class ActionController extends Controller
      */
     public function index()
     {
-        $actions = Action::all();
+        $actions = Action::all()->sortByDesc('created_at');
+        
         $actionsDTO = [];
 
         foreach ($actions as $action) {
